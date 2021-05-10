@@ -1,17 +1,32 @@
 import React from 'react';
 import Pokecard from '../components/Pokecard/Pokecard';
+import { PokemonSchema } from '../types/PokemonSchema';
 import './Pokelist.css';
 
-const Pokelist = () => {
+interface PokelistProps {
+    searchedPokemons: PokemonSchema[];
+    onPokemonClick: (pokemonName: string) => void;
+}
+
+const Pokelist = ({ searchedPokemons, onPokemonClick }: PokelistProps) => {
     return (
         <div className="pokelist" >
-            {/* <p>Pokemon1</p>*/}
-            {/* <p>Pokemon2</p>*/}
-            <Pokecard name="pikachu" />
-            <Pokecard name="jigglypuff" />
-            <Pokecard name="bulbasaur" />
-            <Pokecard name="charlizard" />
-            <Pokecard name="meowth" />
+            {
+                searchedPokemons.map((pokemon) => {
+
+                    return (
+                        pokemon.name && (
+                            <Pokecard
+                                onPokemonClick={onPokemonClick}
+                                key={pokemon.id}
+                                name={pokemon.name}
+                                spriteUrl={pokemon.sprites?.normal}
+                            />
+                        )
+                    )
+
+                })
+            }
         </div>
     );
 };
